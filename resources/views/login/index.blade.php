@@ -45,21 +45,52 @@
                     <h3 class="mb-0">Login Karyawan</h3>
                 </div>
                 <div class="card-body p-4">
+
+                    {{-- Pesan sukses logout --}}
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
+                    {{-- Pesan error umum --}}
                     @if ($errors->any())
                         <div class="alert alert-danger">
                             {{ $errors->first() }}
                         </div>
                     @endif
 
-                    <form action="" method="POST">
+                    <form action="{{ route('login_process') }}" method="POST">
                         @csrf
                         <div class="mb-3">
                             <label class="form-label">Email</label>
-                            <input type="email" name="email" class="form-control" placeholder="Masukkan email" required autofocus>
+                            <input
+                                type="email"
+                                name="email"
+                                class="form-control @error('email') is-invalid @enderror"
+                                placeholder="Masukkan email"
+                                value="{{ old('email') }}"
+                                required
+                                autofocus>
+                            @error('email')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Password</label>
-                            <input type="password" name="password" class="form-control" placeholder="Masukkan password" required>
+                            <input
+                                type="password"
+                                name="password"
+                                class="form-control @error('password') is-invalid @enderror"
+                                placeholder="Masukkan password"
+                                required>
+                            @error('password')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
                         <button class="btn btn-primary w-100 py-2">Login</button>
                     </form>
@@ -71,6 +102,5 @@
         </div>
     </div>
 </div>
-
 </body>
 </html>
