@@ -32,10 +32,10 @@
                         <a href="/dashboard" class="nav-link active fw-semibold text-primary">Dashboard</a>
                     </li>
                     <li class="nav-item mb-2">
-                        <a href="/pegawai" class="nav-link text-dark">Pegawai</a>
+                        <a href="{{ route('emp') }}" class="nav-link text-dark">Pegawai</a>
                     </li>
                     <li class="nav-item mb-2">
-                        <a href="/payroll" class="nav-link text-dark">Payroll</a>
+                        <a href="" class="nav-link text-dark">Payroll</a>
                     </li>
                     <li class="nav-item mb-2">
                         <a href="/user" class="nav-link text-dark">User</a>
