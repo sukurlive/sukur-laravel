@@ -32,7 +32,7 @@
                         <a href="/dashboard" class="nav-link active fw-semibold text-primary">Dashboard</a>
                     </li>
                     <li class="nav-item mb-2">
-                        <a href="{{ route('emp') }}" class="nav-link text-dark">Pegawai</a>
+                        <a href="{{ route('emp.index') }}" class="nav-link text-dark">Pegawai</a>
                     </li>
                     <li class="nav-item mb-2">
                         <a href="" class="nav-link text-dark">Payroll</a>
