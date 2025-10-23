@@ -7,8 +7,14 @@
     <form action="{{route('emp.store')}}" method="POST">
         @csrf
         <div class="mb-3">
-            <label>Jabatan ID</label>
-            <input type="text" name="jabatan_id" class="form-control" required>
+            <label>Jabatan : </label>
+            <select name="jabatan_id" class="form-control">
+                <option value="">--Pilih Jabatan--</option>
+                @foreach($jabatan as $row)
+                <option value="{{$row->id_position}}">{{$row->nama_jabatan}}</option>
+                @endforeach
+            </select>
+            {!! $errors->first('jabatan_id', '<p class="help-block"><small>:message</small></p>') !!}
         </div>
         <div class="mb-3">
             <label>Nama</label>

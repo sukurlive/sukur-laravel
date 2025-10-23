@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employee;
+use App\Models\Position;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
@@ -16,7 +17,9 @@ class EmployeeController extends Controller
 
     public function create()
     {
-        return view('backend.employees.create');
+        $jabatan = Position::all();
+
+        return view('backend.employees.create', compact('jabatan'));
     }
 
     public function store(Request $request)
@@ -38,6 +41,26 @@ class EmployeeController extends Controller
         $employee = Employee::findOrFail($id);
 
         return view('backend.employees.edit', compact('employee'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'email' => 'required|email|unique:employees,email,' . $id . ',id_emp',
+            'alamat' => 'nullable|string',
+            'jabatan_id' => 'required|string',
+        ]);
+
+        $employee = Employee::findOrFail($id);
+        $employee->update([
+            'nama' => $request->nama,
+            'email' => $request->email,
+            'alamat' => $request->alamat,
+            'jabatan_id' => $request->jabatan_id,
+        ]);
+
+        return redirect()->route('emp')->with('success', 'Data pegawai berhasil diperbarui.');
     }
 
     public function delete($id)

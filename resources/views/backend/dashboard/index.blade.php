@@ -35,6 +35,9 @@
                         <a href="{{ route('emp.index') }}" class="nav-link text-dark">Pegawai</a>
                     </li>
                     <li class="nav-item mb-2">
+                        <a href="{{ route('jbt.index') }}" class="nav-link text-dark">Jabatan</a>
+                    </li>
+                    <li class="nav-item mb-2">
                         <a href="" class="nav-link text-dark">Payroll</a>
                     </li>
                     <li class="nav-item mb-2">

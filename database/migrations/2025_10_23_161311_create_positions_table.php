@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('employees', function (Blueprint $table) {
-            $table->id('id_emp'); // primary key custom
-            $table->unsignedBigInteger('jabatan_id')->index('positions_id_position_foreign');
-            $table->string('nama');
-            $table->string('email')->unique();
-            $table->text('alamat')->nullable();
+        Schema::create('positions', function (Blueprint $table) {
+            $table->id('id_position');
+            $table->string('nama_jabatan');
+            $table->integer('gaji_pokok');
             $table->timestamps();
         });
     }
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('employees');
+        Schema::dropIfExists('positions');
     }
 };
