@@ -60,7 +60,7 @@ class EmployeeController extends Controller
             'jabatan_id' => $request->jabatan_id,
         ]);
 
-        return redirect()->route('emp')->with('success', 'Data pegawai berhasil diperbarui.');
+        return redirect()->route('emp.index')->with('success', 'Data pegawai berhasil diperbarui.');
     }
 
     public function delete($id)

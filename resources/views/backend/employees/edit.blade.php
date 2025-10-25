@@ -22,7 +22,7 @@
 
         <div class="mb-3">
             <label for="alamat" class="form-label">Alamat</label>
-            <textarea name="alamat" id="alamat" class="form-control">{{ old('alamat', $employee->alamat) }}</textarea>
+            <textarea type="text" name="alamat" id="alamat" class="form-control">{{ old('alamat', $employee->alamat) }}</textarea>
         </div>
 
         <div class="mb-3">
@@ -31,7 +31,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-        <a href="{{ route('emp') }}" class="btn btn-secondary">Kembali</a>
+        <a href="{{ route('emp.index') }}" class="btn btn-secondary">Kembali</a>
     </form>
 </div>
 @endsection

@@ -7,11 +7,30 @@ use Illuminate\Http\Request;
 
 class PositionController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $position = Position::all();
+        $search = $request->input('search');
 
-        return view('backend.positions.index', compact('position'));
+        // Buat query dasar
+        $query = Position::query();
+
+        // Jika ada kata kunci pencarian, filter data
+        if(!empty($search)) 
+        {
+            $query->where('nama_jabatan', 'like', '%'.$search.'%')->orWhere('gaji_pokok', 'like', '%'.$search.'%');
+        $position = $query->orderBy('nama_jabatan', 'asc')->get();
+
+            return view('backend.positions.index', compact( 'position'));
+
+        }else{
+                        return view('backend.positions.index', compact( 'position'));
+
+        }
+
+        // Ambil hasil (bisa pakai paginate jika ingin)
+
+        //kirim data ke view
     }
 
     public function create()
