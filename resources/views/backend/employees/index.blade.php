@@ -19,6 +19,7 @@
                 <thead class="table light">
                     <tr>
                         <th>ID</th>
+                        <th>Foto</th>
                         <th>Nama</th>
                         <th>Email</th>
                         <th>Alamat</th>
@@ -30,10 +31,20 @@
                     @forelse($emp as $row)
                     <tr>
                         <td>{{ $row->id_emp }}</td>
+                        <td>
+                            @if( $row->img)
+                                <img src="{{ asset('image/'. $row->img) }}"
+                                    alt="Foto {{ $row->nama}}"
+                                    width="60" height="60"
+                                    class="rounded-circle border">
+                            @else
+                                <span class="text-muted"> Tidak ada</span>
+                            @endif
+                        </td>
                         <td>{{ $row->nama }}</td>
                         <td>{{ $row->email }}</td>
                         <td>{{ $row->alamat }}</td>
-                        <td>{{ $row->jabatan_id }}</td>
+                        <td>{{ $row->position->nama_jabatan ?? '-' }}</td>
                         <td>
                             <a href="{{ route('emp.edit', $row->id_emp) }}" class="btn btn-warning btn-sm"> Edit</a>
                             <form action="{{ route('emp.delete', $row->id_emp) }}" method="POST" class="d-inline">

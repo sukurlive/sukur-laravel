@@ -29,9 +29,26 @@ class EmployeeController extends Controller
             'nama'          => 'required|string|max:255',
             'email'         => 'required|email|unique:employees,email',
             'alamat'        => 'nullable|string',
+            'foto'          => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
-        Employee::create($request->all());
+        $data = [
+            'jabatan_id'    => $request->jabatan_id,
+            'nama'          => $request->nama,
+            'email'         => $request->email,
+            'alamat'        => $request->alamat,
+        ];
+
+        //Upload foto
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $nama_file = time(). '_' . $file->getClientOriginalName();
+            $file->move(public_path('image'), $nama_file);
+
+            $data['img'] = $nama_file;
+        }
+
+        Employee::create($data);
 
         return redirect()->route('emp.index')->with('success', 'Data Pegawai berhasil ditambahkan');
     }
