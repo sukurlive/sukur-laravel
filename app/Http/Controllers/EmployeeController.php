@@ -8,11 +8,27 @@ use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $emp = Employee::all();
 
-        return view('backend.employees.index', compact('emp'));
+        $search = $request->input('search');
+
+        $query = Employee::query();
+
+        // Jika ada kata kunci pencarian, filter data
+        if(!empty($search)) 
+        {
+            $query->where('nama', 'like', '%'.$search.'%')->orWhere('email', 'like', '%'.$search.'%');
+            $employee = $query->orderBy('nama', 'asc')->get();
+
+            return view('backend.employees.index', compact('emp'));
+
+        }else
+        {
+            return view('backend.employees.index', compact('emp'));
+
+        }
     }
 
     public function create()

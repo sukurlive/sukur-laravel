@@ -19,18 +19,15 @@ class PositionController extends Controller
         if(!empty($search)) 
         {
             $query->where('nama_jabatan', 'like', '%'.$search.'%')->orWhere('gaji_pokok', 'like', '%'.$search.'%');
-        $position = $query->orderBy('nama_jabatan', 'asc')->get();
+            $position = $query->orderBy('nama_jabatan', 'asc')->get();
 
             return view('backend.positions.index', compact( 'position'));
 
-        }else{
-                        return view('backend.positions.index', compact( 'position'));
+        }else
+        {
+            return view('backend.positions.index', compact( 'position'));
 
         }
-
-        // Ambil hasil (bisa pakai paginate jika ingin)
-
-        //kirim data ke view
     }
 
     public function create()

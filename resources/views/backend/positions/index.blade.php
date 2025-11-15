@@ -8,17 +8,18 @@
         <a href="{{route('jbt.create')}}" class="btn btn-primary btn-sm">+ Tambah Jabatan</a>    
     </div>
 
-    <form action="{{ route('jbt.index') }}" method="GET" class="mb-3 d-flex">
-        <input type="text" 
-                name="search" 
-                class="form-control" 
-                placeholder="Cari berdasarkan Nama Jabatan atau Gaji..." 
-                value="{{ request('search') }}">
-        <button type="submit" class="btn btn-primary">Cari</button>
-        @if(request('search'))
-            <a href="{{ route('jbt.index') }}" class="btn btn-secondary">Reset</a>
-        @endif
-    </form>
+    <div>
+        <form action="{{ route('jbt.index') }}" method="GET" class="mb-3 d-flex">
+            <input type="text" 
+                    name="search" 
+                    class="form-control" 
+                    placeholder="Cari berdasarkan Nama Jabatan atau Gaji..." 
+                    value="{{ request('search') }}">
+            <button type="submit" class="btn btn-primary">Cari</button>
+            @if(request('search'))
+                <a href="{{ route('jbt.index') }}" class="btn btn-secondary">Reset</a>
+            @endif
+        </form>
     </div>
 
     <!-- Pesan Sukses -->
