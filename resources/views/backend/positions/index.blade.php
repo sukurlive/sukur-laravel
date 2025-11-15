@@ -8,29 +8,17 @@
         <a href="{{route('jbt.create')}}" class="btn btn-primary btn-sm">+ Tambah Jabatan</a>    
     </div>
 
-    <!--  Form Search  -->
-    <!-- <div class="row mb-3">
-        <div class="col-md-6"> -->
-            <form action="{{ route('jbt.index') }}" method="GET" class="mb-3 d-flex">
-                <input type="text" 
-                        name="search" 
-                        class="form-control" 
-                        placeholder="Cari berdasarkan Nama Jabatan atau Gaji..." 
-                        value="{{ request('search') }}">
-                <button type="submit" class="btn btn-primary">Cari</button>
-                @if(request('search'))
-                    <a href="{{ route('jbt.index') }}" class="btn btn-secondary">Reset</a>
-                @endif
-            </form>
-        <!-- </div> -->
-        <!-- <div class="col-md-6 text-end">
-            <small class="text-muted">
-                Menampilkan {{ $position->count() }} data
-                @if(request('search'))
-                    dari pencarian "<strong>{{ request('search') }}</strong>"
-                @endif
-            </small>
-        </div> -->
+    <form action="{{ route('jbt.index') }}" method="GET" class="mb-3 d-flex">
+        <input type="text" 
+                name="search" 
+                class="form-control" 
+                placeholder="Cari berdasarkan Nama Jabatan atau Gaji..." 
+                value="{{ request('search') }}">
+        <button type="submit" class="btn btn-primary">Cari</button>
+        @if(request('search'))
+            <a href="{{ route('jbt.index') }}" class="btn btn-secondary">Reset</a>
+        @endif
+    </form>
     </div>
 
     <!-- Pesan Sukses -->
@@ -53,14 +41,13 @@
                     @forelse($position as $row)
                     <tr>
                         <td>{{ $row->id_position }}</td>
-                        <!-- <td>{{ $row->nama_jabatan }}</td> -->
-                         <td>
+                        <td>
                             @if(request('search'))
                                 {!! str_ireplace(request('search'), '<mark>' . request('search') . '</mark>', $row->nama_jabatan) !!}
                             @else
                                 {{ $row->nama_jabatan }}
                             @endif
-                         </td>
+                        </td>
                         <td>{{ $row->gaji_pokok }}</td>
                         <td>
                             <a href="{{ route('jbt.edit', $row->id_position) }}" class="btn btn-warning btn-sm"> Edit</a>
@@ -72,9 +59,6 @@
                         </td>
                     </tr>
                     @empty
-                    <!-- <tr>
-                        <td colspan="6" class="text-center"> Belum ada data jabatan</td>
-                    </tr> -->
                     <tr>
                         <td colspan="4" class="text-center py-4">
                             @if(request('search'))

@@ -4,13 +4,13 @@
 @section('content')
 <div class="container">
     <h2>Tambah Pegawai</h2>
-    <form action="{{route('emp.store')}}" method="POST" enctype="multipart/form-data" >
+    <form action="{{route('emp.store')}}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">
             <label>Jabatan : </label>
             <select name="jabatan_id" class="form-control">
                 <option value="">--Pilih Jabatan--</option>
-                @foreach($jabatan as $row)
+                @foreach($positions as $row)
                 <option value="{{$row->id_position}}">{{$row->nama_jabatan}}</option>
                 @endforeach
             </select>

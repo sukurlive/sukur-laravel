@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Atrribute;
 
 class Position extends Model
 {
@@ -10,8 +11,10 @@ class Position extends Model
     public $incrementing = false;
     protected $fillable = ['nama_jabatan', 'gaji_pokok'];
 
-    protected function formatGaji()
+    protected function formatGaji(): Attribute
     {
-        //
+        return Attribute::make(
+            fn ($value, $attributes) => 'Rp ' . number_format($attributes['gaji_pokok'], 0, ',', '.')
+        );
     }
 }

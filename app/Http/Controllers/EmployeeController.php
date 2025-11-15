@@ -17,9 +17,9 @@ class EmployeeController extends Controller
 
     public function create()
     {
-        $jabatan = Position::all();
+        $positions = Position::all();
 
-        return view('backend.employees.create', compact('jabatan'));
+        return view('backend.employees.create', compact('positions'));
     }
 
     public function store(Request $request)
@@ -40,7 +40,8 @@ class EmployeeController extends Controller
         ];
 
         //Upload foto
-        if ($request->hasFile('foto')) {
+        if ($request->hasFile('foto'))
+        {
             $file = $request->file('foto');
             $nama_file = time(). '_' . $file->getClientOriginalName();
             $file->move(public_path('image'), $nama_file);
@@ -55,28 +56,55 @@ class EmployeeController extends Controller
 
     public function edit($id)
     {
+        $positions = Position::all();
         $employee = Employee::findOrFail($id);
 
-        return view('backend.employees.edit', compact('employee'));
+        return view('backend.employees.edit', compact('employee', 'positions'));
     }
 
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nama' => 'required|string|max:255',
-            'email' => 'required|email|unique:employees,email,' . $id . ',id_emp',
-            'alamat' => 'nullable|string',
-            'jabatan_id' => 'required|string',
+            'nama'          => 'required|string|max:255',
+            'email'         => 'required|email|unique:employees,email,' . $id . ',id_emp',
+            'alamat'        => 'nullable|string',
+            'jabatan_id'    => 'required|string',
+            'foto'          => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $employee = Employee::findOrFail($id);
-        $employee->update([
-            'nama' => $request->nama,
-            'email' => $request->email,
-            'alamat' => $request->alamat,
-            'jabatan_id' => $request->jabatan_id,
-        ]);
 
+        //jika ada foto baru diupload
+        if($request->hasFile('foto'))
+        {
+            //hapus foto lama kalau ada
+            if($employee->img && file_exists(public_path('image/'. $employee->img)))
+            {
+                unlink(public_path('image/'. $employee->img));
+            }
+
+            //upload foto baru
+            $file = $request->file('foto');
+            $namaFile = time(). '_' . $file->getClientOriginalName();
+            $file->move(public_path('image'), $namaFile);
+
+            $employee->update([
+                'nama'          => $request->nama,
+                'email'         => $request->email,
+                'alamat'        => $request->alamat,
+                'jabatan_id'    => $request->jabatan_id,
+                'img'           => $namaFile,
+            ]);
+        }else
+        {
+            $employee->update([
+                'nama'          => $request->nama,
+                'email'         => $request->email,
+                'alamat'        => $request->alamat,
+                'jabatan_id'    => $request->jabatan_id,
+            ]);
+        }
+            
         return redirect()->route('emp.index')->with('success', 'Data pegawai berhasil diperbarui.');
     }
 
