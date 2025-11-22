@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\PositionController;
 
 Route::get('/', [LoginController::class, 'index'])->name('login');
@@ -24,3 +25,7 @@ Route::post('/position/store', [PositionController::class, 'store'])->name('jbt.
 Route::get('/position/{id}/edit', [PositionController::class, 'edit'])->name('jbt.edit');
 Route::put('/position/{id}/update', [PositionController::class, 'update'])->name('jbt.update');
 Route::delete('/position/{id}/delete', [PositionController::class, 'delete'])->name('jbt.delete');
+
+Route::get('/payroll', [PayrollController::class, 'index'])->name('payroll.index');
+Route::get('/payroll/create/{id}', [PayrollController::class, 'create'])->name('payroll.create');
+Route::post('/payroll/store', [PayrollController::class, 'store'])->name('payroll.store');
