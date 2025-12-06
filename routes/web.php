@@ -29,3 +29,9 @@ Route::delete('/position/{id}/delete', [PositionController::class, 'delete'])->n
 Route::get('/payroll', [PayrollController::class, 'index'])->name('payroll.index');
 Route::get('/payroll/create/{id}', [PayrollController::class, 'create'])->name('payroll.create');
 Route::post('/payroll/store', [PayrollController::class, 'store'])->name('payroll.store');
+Route::get('/payroll/employee/{id}', [PayrollController::class, 'showByEmployee'])->name('payroll.show');
+Route::get('/payroll/detail/{id}', [PayrollController::class, 'showDetail'])->name('payroll.detail');
+
+Route::get('/payroll/edit/{id}', [PayrollController::class, 'edit'])->name('payroll.edit');
+Route::put('/payroll/update/{id}', [PayrollController::class, 'update'])->name('payroll.update');
+Route::delete('/payroll/delete/{id}', [PayrollController::class, 'destroy'])->name('payroll.delete');

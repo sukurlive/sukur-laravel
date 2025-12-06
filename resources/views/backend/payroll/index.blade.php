@@ -26,12 +26,14 @@
                         <td>{{ $row->nama }}</td>
                         <td>{{ $row->position->nama_jabatan ?? '-' }}</td>
                         <td>
+                             {{-- Buat payroll baru --}}
                             <a href="{{ route('payroll.create', $row->id_emp) }}"
                                 class="btn btn-success btn-sm"> + Buat Payroll
                             </a>
 
-                            <a href=""
-                                class="btn btn-primary btn-sm"> Lihat Payroll
+                            {{-- Lihat daftar payroll pegawai --}}
+                            <a href="{{ route('payroll.show', $row->id_emp) }}"
+                                class="btn btn-primary btn-sm">Lihat Payroll
                             </a>
                         </td>
                     </tr>

@@ -1,35 +1,33 @@
 @extends('backend.dashboard.index')
 
-@section('title', 'Buat Payroll')
+@section('title', 'Edit Payroll')
 
 @section('content')
 
-<h4 class="fw-bold mb-3">Buat Payroll - {{ $emp->nama }}</h4>
+<h4 class="fw-bold mb-3">Edit Payroll - {{ $payroll->employee->nama }}</h4>
 
-@if(session('error'))
-    <div class="alert alert-warning">{{ session('error')}}</div>
-@endif
-
-<form action="{{ route('payroll.store') }}" method="POST">
+<form action="{{ route('payroll.update', $payroll->id) }}" method="POST">
     @csrf
+    @method('PUT')
 
-    <input type="hidden" name="emp_id" value="{{ $emp->id_emp }}">
+    <input type="hidden" name="emp_id" value="{{ $payroll->employee->id_emp }}">
 
     <div class="row">
         <div class="col-md-6">
 
             <div class="mb-3">
                 <label class="form-label">Periode / Bulan</label>
-                <input type="month" name="bulan" class="form-control" required>
+                <input type="month" name="bulan" class="form-control" value="{{ $payroll->bulan }}" required>
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Gaji Pokok</label>
-                <input type="text" id="gaji_pokok_display"
-                       value="{{ number_format($emp->position->gaji_pokok,0,',','.') }}"
-                       class="form-control" disabled>
 
-                <input type="hidden" id="gaji_pokok" value="{{ $emp->position->gaji_pokok }}">
+                <input type="text" id="gaji_pokok_display"
+                    value="{{ number_format($payroll->employee->position->gaji_pokok,0,',','.') }}"
+                    class="form-control" disabled>
+
+                <input type="hidden" id="gaji_pokok" value="{{ $payroll->employee->position->gaji_pokok }}">
             </div>
 
         </div>
@@ -45,28 +43,30 @@
                 <th width="25%">Jenis</th>
                 <th width="45%">Keterangan</th>
                 <th width="20%">Jumlah</th>
-                <th width="10%">#</th>
+                <th width="10%">Aksi</th>
             </tr>
         </thead>
 
         <tbody>
+            @foreach($payroll->details as $d)
             <tr>
                 <td>
                     <select name="jenis[]" class="form-control jenis" required>
                         <option value="">-- Pilih --</option>
-                        <option value="Tunjangan">Tunjangan</option>
-                        <option value="Potongan">Potongan</option>
-                        <option value="Lembur">Lembur</option>
-                        <option value="Lainnya">Lainnya</option>
+                        <option value="Tunjangan" {{ $d->jenis == 'Tunjangan' ? 'selected' : '' }}>Tunjangan</option>
+                        <option value="Potongan" {{ $d->jenis == 'Potongan' ? 'selected' : '' }}>Potongan</option>
+                        <option value="Lembur" {{ $d->jenis == 'Lembur' ? 'selected' : '' }}>Lembur</option>
+                        <option value="Lainnya" {{ $d->jenis == 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
                     </select>
                 </td>
 
-                <td><input type="text" name="keterangan[]" class="form-control"></td>
+                <td><input type="text" name="keterangan[]" class="form-control" value="{{ $d->keterangan }}"></td>
 
-                <td><input type="number" name="jumlah[]" class="form-control jumlah" required></td>
+                <td><input type="number" name="jumlah[]" class="form-control jumlah" value="{{ $d->jumlah }}" required></td>
 
-                <td><button type="button" class="btn btn-danger btn-sm remove-row">X</button></td>
+                <td><button type="button" class="btn btn-danger btn-sm remove-row">X Hapus</button></td>
             </tr>
+            @endforeach
         </tbody>
     </table>
 
@@ -78,15 +78,16 @@
 
     <h4>Total Gaji:
         <span id="total_display" class="fw-bold text-success">
-            Rp {{ number_format($emp->position->gaji_pokok,0,',','.') }}
+            Rp {{ number_format($payroll->total_gaji,0,',','.') }}
         </span>
     </h4>
 
-    <input type="hidden" name="total_gaji" id="total_gaji" value="{{ $emp->position->gaji_pokok }}">
+    <input type="hidden" name="total_gaji" id="total_gaji" value="{{ $payroll->total_gaji }}">
 
     <br>
 
-    <button class="btn btn-primary">Simpan Payroll</button>
+    <button class="btn btn-primary">Update Payroll</button>
+    <a href="{{ url()->previous() }}" class="btn btn-secondary">Kembali</a>
 </form>
 
 <script>
@@ -111,7 +112,6 @@ function hitungTotal() {
 
     let total = gaji_pokok + tambahan - potongan;
 
-    // update tampilan
     document.getElementById('total_display').innerHTML =
         "Rp " + total.toLocaleString('id-ID');
 
@@ -151,6 +151,9 @@ document.addEventListener('click', function (e) {
         hitungTotal();
     }
 });
+
+// Hitung total saat halaman dibuka
+hitungTotal();
 </script>
 
 @endsection
