@@ -12,7 +12,7 @@
     <nav class="navbar navbar-light bg-white shadow-sm px-3">
         <a class="navbar-brand fw-bold text-primary" href="/dashboard">My Dashboard</a>
         <div class="d-flex align-items-center">
-            <span class="me-3 text-muted">Halo, Admin</span>
+            <span class="me-3 text-muted">Halo, {{ Auth::user()->name ?? 'Admin'}}</span>
             <form action="{{ route('logout') }}" method="POST" class="d-inline">
                 @csrf
                 <button type="submit" class="btn btn-sm btn-outline-danger">
@@ -48,35 +48,7 @@
 
             {{-- Konten --}}
             <main class="col-12 col-md-9 col-lg-10 p-4">
-                <h2 class="fw-bold text-dark mb-4">Dashboard</h2>
 
-                {{-- Card Statistik --}}
-                <div class="row g-3">
-                    <div class="col-md-4">
-                        <div class="card border-0 shadow-sm rounded-3">
-                            <div class="card-body">
-                                <h6 class="text-muted">Total Pegawai</h6>
-                                <h3 class="fw-bold text-primary">120</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card border-0 shadow-sm rounded-3">
-                            <div class="card-body">
-                                <h6 class="text-muted">Total Payroll</h6>
-                                <h3 class="fw-bold text-success">Rp 250jt</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card border-0 shadow-sm rounded-3">
-                            <div class="card-body">
-                                <h6 class="text-muted">User Aktif</h6>
-                                <h3 class="fw-bold text-warning">50</h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
                 {{-- Tempat Konten Utama --}}
                 <div class="mt-4">
